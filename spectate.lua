@@ -1,7 +1,6 @@
 local List = Tool:WaitForChild("List")
 local Control = Tool:WaitForChild("Control")
 local ExamplePlayer = Tool:WaitForChild("Example")
-print'1'
 
 local Active = false
 local ControlOpen = false
@@ -10,7 +9,6 @@ local TargetPlayer
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Camera = game.Workspace.CurrentCamera
 local CheckList
-print'2'
 
 local function DefineCheckList()
 	CheckList = game:GetService("Players"):GetPlayers()
@@ -89,7 +87,7 @@ local function ToggleC()
 		ControlOpen = true
 	end
 end
-print'3'
+
 Control.Options.Frame.OpenC.MouseButton1Down:connect(ToggleC)
 
 Tool.Equipped:Connect(function()
@@ -126,14 +124,13 @@ Tool.Unequipped:Connect(function()
 	Control.Options.Frame.Size = UDim2.new(0.5,0,0,0)
 	Control.Options.Frame.OpenC.Image = "http://www.roblox.com/asset/?id=108326682"
 end)
-print'4'
+
 DefineCheckList()
 game:GetService("Players").PlayerAdded:Connect(DefineCheckList)
 game:GetService("Players").PlayerRemoving:Connect(DefineCheckList)
-print'7'
 List.Parent = LocalPlayer:WaitForChild("PlayerGui")
 Control.Parent = LocalPlayer.PlayerGui
-print'6'
+
 game:GetService("RunService").RenderStepped:Connect(function()
 	if not TargetPlayer then return end
 	Control.Options.Frame.PlayerInfo.PlrName.Text = "Name: "..tostring(TargetPlayer)
@@ -142,4 +139,3 @@ game:GetService("RunService").RenderStepped:Connect(function()
 	Control.Options.Frame.PlayerInfo.MHealth.Text = "Max Health: "..tostring(TargetPlayer.Character.Humanoid.MaxHealth)
 	Control.Options.Frame.PlayerInfo.ImageLabel.Image = "http://www.roblox.com/thumbs/avatar.ashx?x=200&y=200&format=png&username="..tostring(TargetPlayer)
 end)
-print'5'
