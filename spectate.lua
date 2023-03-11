@@ -94,7 +94,6 @@ Tool.Equipped:Connect(function()
 	Active = true
 	ActiveChanged:Fire()
 	List.Enabled = true
-	Control.Enabled = true
 	for _, player in pairs(CheckList) do
 		local PreviousPosition = UDim2.new(-0.1, 0, 0, 0)
 		local Button = MakeButton(player)
@@ -131,11 +130,15 @@ game:GetService("Players").PlayerRemoving:Connect(DefineCheckList)
 List.Parent = LocalPlayer:WaitForChild("PlayerGui")
 Control.Parent = LocalPlayer.PlayerGui
 
-game:GetService("RunService").RenderStepped:Connect(function()
+local con
+con = game:GetService("RunService").RenderStepped:Connect(function()
 	if not TargetPlayer then return end
-	Control.Options.Frame.PlayerInfo.PlrName.Text = "Name: "..tostring(TargetPlayer)
-	Control.Options.Frame.PlayerInfo.Walkspeed.Text = "Walkspeed: "..tostring(TargetPlayer.Character.Humanoid.WalkSpeed)
-	Control.Options.Frame.PlayerInfo.Health.Text = "Health: "..tostring(TargetPlayer.Character.Humanoid.Health)
-	Control.Options.Frame.PlayerInfo.MHealth.Text = "Max Health: "..tostring(TargetPlayer.Character.Humanoid.MaxHealth)
-	Control.Options.Frame.PlayerInfo.ImageLabel.Image = "http://www.roblox.com/thumbs/avatar.ashx?x=200&y=200&format=png&username="..tostring(TargetPlayer)
+	pcall(function()
+		Control.Options.Frame.PlayerInfo.PlrName.Text = "Name: "..tostring(TargetPlayer)
+		Control.Options.Frame.PlayerInfo.Walkspeed.Text = "Walkspeed: "..tostring(TargetPlayer.Character.Humanoid.WalkSpeed)
+		Control.Options.Frame.PlayerInfo.Health.Text = "Health: "..tostring(TargetPlayer.Character.Humanoid.Health)
+		Control.Options.Frame.PlayerInfo.MHealth.Text = "Max Health: "..tostring(TargetPlayer.Character.Humanoid.MaxHealth)
+		Control.Options.Frame.PlayerInfo.ImageLabel.Image = "http://www.roblox.com/thumbs/avatar.ashx?x=200&y=200&format=png&username="..tostring(TargetPlayer)
+	end)
+	if not Tool or not Control or not List or Control.Parent ~= LocalPlayer.PlayerGui or List.Parent ~= LocalPlayer.PlayerGui then con:Disconnect() end
 end)
