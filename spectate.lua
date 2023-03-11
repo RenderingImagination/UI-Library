@@ -1,4 +1,3 @@
-local Tool = script.Parent
 local List = Tool:WaitForChild("List")
 local Control = Tool:WaitForChild("Control")
 local ExamplePlayer = Tool:WaitForChild("Example")
