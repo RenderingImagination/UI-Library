@@ -437,15 +437,15 @@ local function createBind(option, parent)
 			if option.hold then
 				loop = runService.Heartbeat:connect(function()
 					if binding then
-						option.callback(true)
+						option.callback(false)
 						loop:Disconnect()
 						loop = nil
 					else
-						option.callback()
+						option.callback(true)
 					end
 				end)
 			else
-				option.callback()
+				option.callback(true)
 			end
 		elseif binding then
 			local key
@@ -469,7 +469,7 @@ local function createBind(option, parent)
 			if loop then
 				loop:Disconnect()
 				loop = nil
-				option.callback(true)
+				option.callback(false)
 			end
 		end
 	end)
