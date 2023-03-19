@@ -430,22 +430,25 @@ local function createBind(option, parent)
 			end
 		end
 	end)
-
+	local active = false
 	inputService.InputBegan:connect(function(input)
 		if inputService:GetFocusedTextBox() then return end
 		if (input.KeyCode.Name == option.key or input.UserInputType.Name == option.key) and not binding then
 			if option.hold then
 				loop = runService.Heartbeat:connect(function()
 					if binding then
-						option.callback(false)
+						active = false
+						option.callback(active)
 						loop:Disconnect()
 						loop = nil
 					else
-						option.callback(true)
+						active = true
+						option.callback(active)
 					end
 				end)
 			else
-				option.callback(true)
+				active = not active
+				option.callback(active)
 			end
 		elseif binding then
 			local key
@@ -469,7 +472,8 @@ local function createBind(option, parent)
 			if loop then
 				loop:Disconnect()
 				loop = nil
-				option.callback(false)
+				active = false
+				option.callback(active)
 			end
 		end
 	end)
